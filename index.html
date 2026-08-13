@@ -1,115 +1,1380 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobie Barredo | Full-Stack Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Jobie Barredo | Full-Stack .NET Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0f172a',
-                        darkCard: '#1e293b',
-                    }
-                }
+    
+    <style>
+        /* CSS Custom Design System */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --accent-glow: rgba(79, 70, 229, 0.15);
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12), 0 2px 8px -1px rgba(148, 163, 184, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(226, 232, 240, 0.8);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 16px;
+        }
+
+        .dark {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #111827;
+            --bg-card: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --border-color: #374151;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(17, 24, 39, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            transition: var(--transition);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle mesh background blobs */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -10%;
+            width: 60%;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(99, 102, 241, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 800px;
+            right: -10%;
+            width: 60%;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* Layout elements */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-b: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.04em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-primary);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding-top: 160px;
+            padding-bottom: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-info {
+            text-align: left;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: clamp(38px, 5vw, 64px);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .hero-tagline {
+            font-size: clamp(20px, 3vw, 24px);
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+            max-width: 580px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--accent), #10b981);
+            box-shadow: var(--shadow);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        .hero-image-bg {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Section Heading */
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 64px auto;
+        }
+
+        .section-header h2 {
+            font-size: clamp(28px, 4vw, 36px);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px -10px var(--accent-glow);
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--accent-glow);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 24px;
+        }
+
+        .skill-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Experience Section */
+        .experience-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .experience-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 7px;
+            width: 2px;
+            height: calc(100% - 16px);
+            background-color: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--bg-primary);
+            border: 3px solid var(--accent);
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-marker {
+            background-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .timeline-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            border-color: var(--accent);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .role-title {
+            font-size: 20px;
+            color: var(--text-primary);
+        }
+
+        .company-name {
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .time-badge {
+            background-color: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .job-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .responsibility-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .responsibility-list li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .responsibility-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Older experience expander */
+        .older-exp-container {
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .older-exp-container.show {
+            max-height: 2500px; /* High enough to allow full expansion */
+            opacity: 1;
+            margin-top: 48px;
+        }
+
+        .expander-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        /* Education & Certs */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .edu-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .edu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent);
+        }
+
+        .edu-school {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .edu-degree {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .edu-loc {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .cert-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .cert-badge {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .cert-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .contact-info h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: var(--accent-glow);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .contact-text p {
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .social-btn.github:hover {
+            background-color: #24292e;
+            border-color: #24292e;
+        }
+
+        .social-btn.linkedin:hover {
+            background-color: #0077b5;
+            border-color: #0077b5;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-info {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .contact-card {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 32px;
             }
         }
-    </script>
+
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 0;
+            }
+
+            .nav-links {
+                display: none; /* simple hidden for small screens */
+            }
+
+            .menu-btn {
+                display: block;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 dark:bg-darkBg dark:text-slate-100 font-sans transition-colors duration-300">
+<body>
 
-    <nav class="fixed w-full z-50 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-xl font-bold tracking-tighter text-blue-600 dark:text-blue-400">JB.DEV</span>
-            <button id="theme-toggle"
-                class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-blue-500 transition">
-                <span id="theme-icon">🌙</span>
-            </button>
+    <!-- Header Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">JB.DEV</a>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <section class="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center">
-        <div class="mb-8">
-            <img src="profile.jpg" alt="Jobie Barredo"
-                class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-blue-600 object-cover shadow-lg">
-        </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-4">Jobie Barredo</h1>
-        <h2 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-6">Full-Stack .NET Developer</h2>
-        <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
-            Senior-level Developer with 8+ years of experience across the .NET ecosystem.
-            Focused on delivering scalable web solutions and payment integrations for global clients.
-        </p>
-        <div class="flex justify-center gap-4">
-            <a href="mailto:jbbarredo@gmail.com"
-                class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Contact
-                Me</a>
-            <a href="#experience"
-                class="border border-slate-300 dark:border-slate-700 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition">View
-                Experience</a>
-        </div>
-    </section>
-
-    <section id="experience" class="py-20 max-w-4xl mx-auto px-6">
-        <h2 class="text-3xl font-bold mb-12 border-b border-slate-200 dark:border-slate-800 pb-4">Professional
-            Experience</h2>
-
-        <div class="space-y-12">
-            <div class="relative pl-8 border-l-2 border-blue-500">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
-                <h3 class="text-xl font-bold">Software Developer</h3>
-                <p class="text-blue-600 dark:text-blue-400 font-medium">Harris Global Business Services | 2024 – 2025
+    <!-- Hero Section -->
+    <section id="about" class="hero-section">
+        <div class="container hero-grid">
+            <div class="hero-info">
+                <span class="hero-subtitle">Welcome to my Portfolio</span>
+                <h1 class="hero-title">Jobie Barredo</h1>
+                <p class="hero-tagline">Full-Stack .NET Developer</p>
+                <p class="hero-desc">
+                    To secure a challenging position in the information technology field where I can apply my skills and contribute to the success of the team. I bring a proven track record of dedication, reliability, and a commitment to ongoing learning in the dynamic IT landscape. Eager to leverage my technical expertise while continuously developing my abilities to enhance overall team performance.
                 </p>
-                <p class="mt-2 text-slate-600 dark:text-slate-400">
-                    Focused on the configuration and support of complex medical software systems tailored for Australian
-                    healthcare facilities.
-                </p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn btn-primary">
+                        Get In Touch
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                    <a href="Jobie_Barredo_Resume.pdf" download class="btn btn-secondary">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Download Resume
+                    </a>
+                </div>
             </div>
-
-            <div class="relative pl-8 border-l-2 border-slate-300 dark:border-slate-700">
-                <h3 class="text-xl font-bold">Developer</h3>
-                <p class="text-blue-600 dark:text-blue-400 font-medium">Full Scale LLC | Dec 2021 – July 2024</p>
-                <ul class="mt-2 space-y-1 text-slate-600 dark:text-slate-400">
-                    <li>• Full-stack developer for a US-based donor-platform client using C# and .NET.</li>
-                    <li>• Integrated Stripe and PayPal services for the Payments team.</li>
-                    <li>• Managed secure application configurations using AWS Secrets Manager.</li>
-                </ul>
-            </div>
-
-            <div class="relative pl-8 border-l-2 border-slate-300 dark:border-slate-700">
-                <h3 class="text-xl font-bold">IT Specialist / IT Lead</h3>
-                <p class="text-blue-600 dark:text-blue-400 font-medium">Flow Health Outsourcing Inc. | 2018 – 2021</p>
-                <p class="mt-2 text-slate-600 dark:text-slate-400">
-                    Provided technical leadership and infrastructure management for laboratory operations.
-                </p>
-            </div>
-
-            <div class="relative pl-8 border-l-2 border-slate-300 dark:border-slate-700">
-                <h3 class="text-xl font-bold">Software Developer</h3>
-                <p class="text-blue-600 dark:text-blue-400 font-medium">Intelligent Touch Corporation | 2017 – 2018</p>
-                <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">
-                    Maintained solutions using WinForms, ASP.NET MVC, and MSSQL.
-                </p>
+            <div class="hero-image-container">
+                <div class="hero-image-wrapper">
+                    <img src="profile.jpg" alt="Jobie Barredo" class="hero-image">
+                </div>
+                <div class="hero-image-bg"></div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-slate-500 text-sm border-t border-slate-200 dark:border-slate-800">
-        <p>© 2026 Jobie Barredo | Full-Stack Engineer</p>
+    <!-- Skills Section -->
+    <section id="skills" style="background-color: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Skills & Abilities</h2>
+                <p>Advanced engineering competencies, focusing on robust backend architectures, dynamic client frontends, cloud-native deployments, and AI integrations.</p>
+            </div>
+            <div class="skills-grid">
+                
+                <!-- Skill 1 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                        </svg>
+                    </div>
+                    <h3>Core Backend Development</h3>
+                    <p>Expertise in the .NET ecosystem, creating enterprise-ready architectures using modern guidelines.</p>
+                    <div class="skill-tags">
+                        <span class="tag">.NET 10</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">ASP.NET Core</span>
+                        <span class="tag">EF Core</span>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Frontend Frameworks</h3>
+                    <p>Proficient in building interactive, responsive, and performance-optimized user interfaces.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Blazor</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Angular</span>
+                        <span class="tag">VueJS</span>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path>
+                        </svg>
+                    </div>
+                    <h3>Database Management</h3>
+                    <p>Advanced experience in designing, modeling, and managing secure relational databases.</p>
+                    <div class="skill-tags">
+                        <span class="tag">MSSQL</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Dapper</span>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                    </div>
+                    <h3>AI Integration</h3>
+                    <p>Experience implementing local LLMs for agentic workflows and interactive client features.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Ollama</span>
+                        <span class="tag">LM Studio</span>
+                        <span class="tag">DeepSeek</span>
+                        <span class="tag">Qwen</span>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                        </svg>
+                    </div>
+                    <h3>Cloud & AWS Services</h3>
+                    <p>Hands-on cloud orchestration, deployment architectures, and secure IAM configuration.</p>
+                    <div class="skill-tags">
+                        <span class="tag">AWS ECS</span>
+                        <span class="tag">IAM Security</span>
+                        <span class="tag">AWS SSM</span>
+                        <span class="tag">Parameter Store</span>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3>Messaging & Architecture</h3>
+                    <p>Building event-driven, decoupled environments using modern messaging brokers.</p>
+                    <div class="skill-tags">
+                        <span class="tag">AWS End User Messaging</span>
+                        <span class="tag">Microservices</span>
+                        <span class="tag">RESTful API Design</span>
+                        <span class="tag">.NET Aspire</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2>Professional Experience</h2>
+                <p>A proven track record of software architecture, engineering execution, and production shipments.</p>
+            </div>
+            
+            <div class="experience-container">
+                <div class="experience-timeline">
+                    
+                    <!-- Job 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="role-title">Full Stack .NET Developer</h3>
+                                    <span class="company-name">Gabtech Global LLC</span>
+                                </div>
+                                <span class="time-badge">FEB 2025 – JULY 2026</span>
+                            </div>
+                            <p class="job-desc">
+                                Spearheaded the development and successful production delivery of the IDSM Program Wizard, an enterprise housing grant and rehabilitation management application. Led the architecture, database design, core module implementation, and document generation workflows.
+                            </p>
+                            <ul class="responsibility-list">
+                                <li>Spearheaded the project from inception to shipment, architecting the core data access layer using Repository and Unit of Work (UoW) patterns.</li>
+                                <li>Led the end-to-end development of key modules, including the Scope of Work (SoW) engine (with drag-and-drop ordering and tier calculations) and the Payment Draws processing workflow.</li>
+                                <li>Engineered the document automation and reporting engine, building dynamic template-merging systems to generate legal grant agreements, promissory notes, and PDF draw reports.</li>
+                                <li>Managed database schema migrations, navigation properties, and transaction boundaries in SQL Server using Entity Framework Core.</li>
+                                <li>Resolved critical backend latencies, database concurrency issues, and SQL query performance bottlenecks prior to production deployment.</li>
+                            </ul>
+                            <div class="skill-tags">
+                                <span class="tag">C#</span>
+                                <span class="tag">.NET 9</span>
+                                <span class="tag">Blazor Server</span>
+                                <span class="tag">EF Core</span>
+                                <span class="tag">MSSQL</span>
+                                <span class="tag">ASP.NET Core Identity</span>
+                                <span class="tag">QuestPDF</span>
+                                <span class="tag">Serilog</span>
+                                <span class="tag">Azure DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="role-title">SR FullStack .NET Developer (Contractor)</h3>
+                                    <span class="company-name">Cloud Employee APAC, INC.</span>
+                                </div>
+                                <span class="time-badge">OCT 2024 – APR 2025</span>
+                            </div>
+                            <p class="job-desc">
+                                Worked as a contractor for a UK-based company in the business of selling hotel accommodations for all kinds of tourists per season (mainly winter). Assigned to the payments team to work with their partner integrations (Computop and Mythos). Mostly working with frontend to consume backend operations and actions.
+                            </p>
+                            <ul class="responsibility-list">
+                                <li>Work with Product Manager to identify UI/UX decisions for the checkout flow of hotel reservations.</li>
+                                <li>Making sure the checkout flow is always user friendly and prevent double-bookings.</li>
+                                <li>Review PRs when needed to maintain code quality.</li>
+                            </ul>
+                            <div class="skill-tags">
+                                <span class="tag">ASP.NET MVC</span>
+                                <span class="tag">Web API</span>
+                                <span class="tag">VueJS</span>
+                                <span class="tag">VueX</span>
+                                <span class="tag">Entity Framework</span>
+                                <span class="tag">Dapper</span>
+                                <span class="tag">MSSQL</span>
+                                <span class="tag">Umbraco CMS</span>
+                                <span class="tag">Datadog</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="role-title">Software Developer</h3>
+                                    <span class="company-name">Harris Global Business Services Inc.</span>
+                                </div>
+                                <span class="time-badge">JULY 2024 – JULY 2025</span>
+                            </div>
+                            <p class="job-desc">
+                                Provided software development and configuration support for an Australian-based Medical (Maternity) Business Unit of Harris GBS, configuring complex medical software solutions based on scoping documentation.
+                            </p>
+                            <ul class="responsibility-list">
+                                <li>Develop new features and/or Update existing Maternity Model as requested by the Hospital/Facility to meet scoping document requirements.</li>
+                                <li>Import existing features to Hospital/Facility that require similar implementation.</li>
+                                <li>Conduct testing of Configuration changes made by other Developers.</li>
+                            </ul>
+                            <div class="skill-tags">
+                                <span class="tag">C#</span>
+                                <span class="tag">MSSQL</span>
+                                <span class="tag">Jira</span>
+                                <span class="tag">XML</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="role-title">Freelance Developer</h3>
+                                    <span class="company-name">Independent Contractor</span>
+                                </div>
+                                <span class="time-badge">JULY 2024 – OCT 2024</span>
+                            </div>
+                            <p class="job-desc">
+                                Developed a POS/Inventory type MIS application for a printing-press office and a Pet Shop in Iloilo City. Configured a local on-premises hosting infrastructure serving up to 15 concurrent users.
+                            </p>
+                            <ul class="responsibility-list">
+                                <li>Meet with client to discuss requirements planning and budget allocations.</li>
+                                <li>Develop and deliver agreed requirements in a rapid 2-week iteration cycle.</li>
+                                <li>Deploy and setup system to client's on-premises server environments.</li>
+                                <li>Release updates and provide direct user support for resolved issues.</li>
+                            </ul>
+                            <div class="skill-tags">
+                                <span class="tag">ASP.NET Core MVC</span>
+                                <span class="tag">WebAPI</span>
+                                <span class="tag">Angular</span>
+                                <span class="tag">Blazor SSR</span>
+                                <span class="tag">MSSQL</span>
+                                <span class="tag">EF Core</span>
+                                <span class="tag">Azure DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 5 -->
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="role-title">Developer</h3>
+                                    <span class="company-name">Full Scale LLC</span>
+                                </div>
+                                <span class="time-badge">DEC 2021 – JULY 2024</span>
+                            </div>
+                            <p class="job-desc">
+                                Served as a full stack developer for a donor-platform US-based client, designing RESTful web services, webhook endpoints, and handling secure payment integrations.
+                            </p>
+                            <ul class="responsibility-list">
+                                <li>Maintain and develop backend services and frontend portals for client requirements.</li>
+                                <li>Create and optimize complex SQL scripts and database schemas.</li>
+                                <li>Integrate with diverse payment platforms (US region) including Stripe and PayPal.</li>
+                                <li>Conduct comprehensive code reviews of PRs submitted by team members.</li>
+                                <li>Engage in collaborative pair programming to maintain architectural consistency.</li>
+                            </ul>
+                            <div class="skill-tags">
+                                <span class="tag">ASP.NET MVC</span>
+                                <span class="tag">WebAPI</span>
+                                <span class="tag">ReactJS</span>
+                                <span class="tag">MaterialUI</span>
+                                <span class="tag">MySQL</span>
+                                <span class="tag">Dapper</span>
+                                <span class="tag">AWS Secrets Manager</span>
+                                <span class="tag">Stripe</span>
+                                <span class="tag">PayPal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Container for Older Jobs -->
+                    <div id="older-exp" class="older-exp-container">
+                        
+                        <!-- Job 6 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <div>
+                                        <h3 class="role-title">IT Lead / IT Specialist</h3>
+                                        <span class="company-name">Flow Health Outsourcing Inc.</span>
+                                    </div>
+                                    <span class="time-badge">APR 2019 – NOV 2021</span>
+                                </div>
+                                <p class="job-desc">
+                                    Managed office/laboratory networks, servers, and active directories, and resolved internal support queries to maintain 24/7 uptime.
+                                </p>
+                                <ul class="responsibility-list">
+                                    <li>Attend to day-to-day support tickets submitted by administrative and medical agents.</li>
+                                    <li>Maintain uptime and optimized performance for corporate and network assets.</li>
+                                    <li>Manage physical inventory and assignments of company hardware assets.</li>
+                                    <li>Designate team shift assignments to deploy hardware and update systems.</li>
+                                </ul>
+                                <div class="skill-tags">
+                                    <span class="tag">Windows Server</span>
+                                    <span class="tag">Active Directory</span>
+                                    <span class="tag">Group Policy Editor</span>
+                                    <span class="tag">SpiceWorks</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job 7 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <div>
+                                        <h3 class="role-title">Jr Software Engr.</h3>
+                                        <span class="company-name">Intelligent Touch Corporation</span>
+                                    </div>
+                                    <span class="time-badge">JUNE 2017 – MARCH 2019</span>
+                                </div>
+                                <p class="job-desc">
+                                    Assisted senior developers in maintaining, monitoring, and providing fixes for client requirements, database connections, and Razor view templates.
+                                </p>
+                                <ul class="responsibility-list">
+                                    <li>Maintain and create software solutions tailored for client specifications.</li>
+                                    <li>Create and run SQL migrations and maintenance scripts for database tables.</li>
+                                </ul>
+                                <div class="skill-tags">
+                                    <span class="tag">WinForms .NET</span>
+                                    <span class="tag">MSSQL</span>
+                                    <span class="tag">MVVM</span>
+                                    <span class="tag">SSRS</span>
+                                    <span class="tag">ASP.NET MVC</span>
+                                    <span class="tag">AngularJS</span>
+                                    <span class="tag">SmartSVN</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Older Exp -->
+
+                </div> <!-- End Timeline -->
+                
+                <!-- Expander Button -->
+                <div class="expander-btn-wrapper">
+                    <button id="expander-btn" class="btn btn-secondary">
+                        <span>Show Career History</span>
+                        <svg id="expander-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="transition: var(--transition);">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section id="education" style="background-color: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Education & Certifications</h2>
+                <p>Academic foundation and certified vendor credentials supporting my technical profile.</p>
+            </div>
+            
+            <div class="education-grid">
+                
+                <!-- Education -->
+                <div>
+                    <h3 style="margin-bottom: 24px; font-size: 20px;">Education</h3>
+                    <div class="edu-card">
+                        <h4 class="edu-school">Central Philippine University</h4>
+                        <p class="edu-degree">Bachelor of Science in Information Technology</p>
+                        <p class="edu-degree" style="font-size: 14px; font-weight: normal; margin-bottom: 16px;">Major in System Administration</p>
+                        <p class="edu-loc">Jaro, Iloilo City, Philippines</p>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div>
+                    <h3 style="margin-bottom: 24px; font-size: 20px;">Certifications</h3>
+                    <ul class="cert-list">
+                        
+                        <li class="cert-item">
+                            <div class="cert-badge">🎖️</div>
+                            <span class="cert-name">Microsoft Technology Associate: Networking Fundamentals</span>
+                        </li>
+                        <li class="cert-item">
+                            <div class="cert-badge">🎖️</div>
+                            <span class="cert-name">Microsoft Technology Associate: Windows OS Fundamentals</span>
+                        </li>
+                        <li class="cert-item">
+                            <div class="cert-badge">🎖️</div>
+                            <span class="cert-name">Microsoft Technology Associate: Windows Server Administration Fundamentals</span>
+                        </li>
+                        <li class="cert-item">
+                            <div class="cert-badge">🎖️</div>
+                            <span class="cert-name">CCNA: Routing and Switching (Modules 1 and 3)</span>
+                        </li>
+                        <li class="cert-item">
+                            <div class="cert-badge">🎖️</div>
+                            <span class="cert-name">TESDA NCII: Computer Hardware Servicing</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-card">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Feel free to reach out for positions, collaborations, or inquiries. I will get back to you as soon as possible.</p>
+                    
+                    <div class="contact-details">
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:jbbarredo@gmail.com">jbbarredo@gmail.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-text">
+                                <h4>Phone</h4>
+                                <p>+63 967 386 5864</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-text">
+                                <h4>Location</h4>
+                                <p>Iloilo City, Philippines</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 16px;">Connect Digitally</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">Explore my work across git repositories and professional profiles.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/jobzsu" target="_blank" rel="noopener noreferrer" class="social-btn github" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/jobiebarredo" target="_blank" rel="noopener noreferrer" class="social-btn linkedin" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Jobie Barredo | Full-Stack Engineer. Built with Vanilla CSS.</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        const btn = document.getElementById('theme-toggle');
-        const icon = document.getElementById('theme-icon');
+        // Theme Toggle Persistence Logic
         const html = document.documentElement;
-        btn.addEventListener('click', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.classList.add('dark');
+            themeIcon.innerText = '☀️';
+        } else {
+            html.classList.remove('dark');
+            themeIcon.innerText = '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
             html.classList.toggle('dark');
-            icon.innerText = html.classList.contains('dark') ? '☀️' : '🌙';
+            const isDark = html.classList.contains('dark');
+            themeIcon.innerText = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Expander Career Logic
+        const expanderBtn = document.getElementById('expander-btn');
+        const olderExp = document.getElementById('older-exp');
+        const expanderArrow = document.getElementById('expander-arrow');
+
+        expanderBtn.addEventListener('click', () => {
+            const isExpanded = olderExp.classList.contains('show');
+            if (isExpanded) {
+                olderExp.classList.remove('show');
+                expanderBtn.querySelector('span').textContent = 'Show Career History';
+                expanderArrow.style.transform = 'rotate(0deg)';
+                
+                // Scroll to top of experience section smoothly after closing
+                setTimeout(() => {
+                    document.getElementById('experience').scrollIntoView({ behavior: 'smooth' });
+                }, 200);
+            } else {
+                olderExp.classList.add('show');
+                expanderBtn.querySelector('span').textContent = 'Hide Career History';
+                expanderArrow.style.transform = 'rotate(180deg)';
+            }
         });
     </script>
 </body>
